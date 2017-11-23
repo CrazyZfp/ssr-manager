@@ -1,8 +1,10 @@
-import gui.gui_panel as app
+from gui.gui_panel import App
 
 
 def __main__():
-    app.init()
+    app = App()
+    window = app.init()
+    window.mainloop()
 
 
 if __name__ == "__main__":
