@@ -1,8 +1,9 @@
 from gui.global_vars import ssr_config, det_input_widget_dist
 from gui.tk_vars import *
 from tkinter.constants import *
-from const import CONNECT, SHUTDOWN, CONNECT_COLOR, SHUTDOWN_COLOR, KEY_SSR_LIST, DEFAULT_SSR, LAB_NAME_KEY, DEFAULT
-from config_operator import update_config
+from const import CONNECT, SHUTDOWN, CONNECT_COLOR, SHUTDOWN_COLOR, KEY_SSR_LIST, DEFAULT_SSR, LAB_NAME_KEY, DEFAULT, \
+    FAKE_SSR
+from config_operator import update_config, ssr_path_verify
 from log.logger import getLogger
 import copy
 
@@ -48,6 +49,10 @@ def link_btn_click_handler(event):
     link_btn = event.widget
     btn_txt = link_btn["text"]
     if btn_txt == CONNECT:
+        if ssr_path_verify() == FAKE_SSR:
+            from gui.gui_panel import fake_ssr_path_warning
+            fake_ssr_path_warning()
+            return
         link_btn_var.set(SHUTDOWN)
         link_btn["bg"] = SHUTDOWN_COLOR
         link_btn["activebackground"] = SHUTDOWN_COLOR
