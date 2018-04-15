@@ -30,7 +30,7 @@ class App:
 
     def lst_init(self):
         """列表部分 初始化"""
-        from gui.global_vars import det_input_widget_dist
+        from gui.global_vars import det_input_widget_dict
         from gui.tk_vars import lst_listvar
         from gui.gui_funcs import add_btn_click_handler, del_btn_click_handler, lst_item_selected_handler
 
@@ -43,7 +43,7 @@ class App:
         lb = Listbox(lst_frm, lst_lb_cnf, listvariable=lst_listvar, yscrollcommand=scrollbar.set)
         lb.bind("<<ListboxSelect>>", lst_item_selected_handler)
         lb.grid(row=0, column=0, columnspan=2)
-        det_input_widget_dist["lst_lb"] = lb
+        det_input_widget_dict["lst_lb"] = lb
 
         scrollbar.config(command=lb.yview)
 
@@ -60,7 +60,7 @@ class App:
 
     def det_init(self):
         """详情部分 初始化"""
-        from gui.global_vars import det_input_widget_dist
+        from gui.global_vars import det_input_widget_dict
         from gui.tk_vars import link_btn_var
         from gui.gui_funcs import link_btn_click_handler, save_btn_click_handler
 
@@ -70,7 +70,7 @@ class App:
         for index, (lab_name, input_key) in enumerate(LAB_NAME_KEY):
             lb = Label(det_frm, det_label_cnf, text=lab_name)
             tx = Text(det_frm, det_text_cnf)
-            det_input_widget_dist[input_key] = tx
+            det_input_widget_dict[input_key] = tx
 
             lb.grid(column=0, row=index)
             tx.grid(column=1, row=index)

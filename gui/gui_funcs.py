@@ -1,11 +1,13 @@
-from gui.global_vars import ssr_config, det_input_widget_dist
+from gui.global_vars import ssr_config, det_input_widget_dict
 from gui.tk_vars import *
 from tkinter.constants import *
-from const import CONNECT, SHUTDOWN, CONNECT_COLOR, SHUTDOWN_COLOR, KEY_SSR_LIST, DEFAULT_SSR, LAB_NAME_KEY, DEFAULT, \
-    FAKE_SSR
+from multiprocessing import Process
+import copy
+
+from const import *
 from config_operator import update_config, ssr_path_verify
 from log.logger import getLogger
-import copy
+from ssr_invoke import link_ssr
 
 logger = getLogger("gui_funcs")
 
@@ -18,6 +20,8 @@ def init_panel_data():
         if len(ssr_list) > 0:
             ssr_name_list = [ssr["ssr_name"] for ssr in ssr_list]
             lst_listvar.set(ssr_name_list)
+            det_input_widget_dict["lst_lb"].selection_set(0)
+            render_det_data()
             return
 
 
@@ -34,7 +38,7 @@ def add_default_ssr():
 def update_ssr(index):
     ssr = ssr_config[KEY_SSR_LIST][index]
     for (name, key) in LAB_NAME_KEY:
-        text_widget = det_input_widget_dist[key]
+        text_widget = det_input_widget_dict[key]
         ssr[key] = text_widget.get("1.0", END).strip()
     init_panel_data()
     update_config(ssr_config)
@@ -48,6 +52,7 @@ def del_ssr(index):
 def link_btn_click_handler(event):
     link_btn = event.widget
     btn_txt = link_btn["text"]
+    global p
     if btn_txt == CONNECT:
         if ssr_path_verify() == FAKE_SSR:
             from gui.gui_panel import fake_ssr_path_warning
@@ -56,14 +61,19 @@ def link_btn_click_handler(event):
         link_btn_var.set(SHUTDOWN)
         link_btn["bg"] = SHUTDOWN_COLOR
         link_btn["activebackground"] = SHUTDOWN_COLOR
+        p = Process(target=link_ssr,
+                    args=(ssr_config[KEY_SSR_PATH], ssr_config[KEY_SSR_LIST][ssr_selected_index]))
+        p.start()
     else:
+        if p is not None:
+            p.terminate()
         link_btn_var.set(CONNECT)
         link_btn["bg"] = CONNECT_COLOR
         link_btn["activebackground"] = CONNECT_COLOR
 
 
 def add_btn_click_handler(_):
-    lst_lb = det_input_widget_dist["lst_lb"]
+    lst_lb = det_input_widget_dict["lst_lb"]
     lst_lb.insert(END, DEFAULT)
     add_default_ssr()
     lst_lb.select_clear(0, END)
@@ -72,14 +82,14 @@ def add_btn_click_handler(_):
 
 
 def save_btn_click_handler(_):
-    lst_lb = det_input_widget_dist["lst_lb"]
+    lst_lb = det_input_widget_dict["lst_lb"]
     if lst_lb.size() == 0:
         add_default_ssr()
     update_ssr(ssr_selected_index)
 
 
 def del_btn_click_handler(_):
-    lst_lb = det_input_widget_dist["lst_lb"]
+    lst_lb = det_input_widget_dict["lst_lb"]
     index_selected_tuple = lst_lb.curselection()
     if len(index_selected_tuple) > 0:
         selected_index = index_selected_tuple[0]
@@ -102,7 +112,7 @@ def lst_item_selected_handler(_):
 
 
 def render_det_data():
-    lst_lb = det_input_widget_dist["lst_lb"]
+    lst_lb = det_input_widget_dict["lst_lb"]
     item_selected_list = lst_lb.curselection()
     # prevent exception when lst_lb lose focus
     if len(item_selected_list) == 1:
@@ -110,10 +120,10 @@ def render_det_data():
         ssr_selected_index = item_selected_list[0]
         ssr = ssr_config[KEY_SSR_LIST][ssr_selected_index]
         for (name, key) in LAB_NAME_KEY:
-            det_input_widget = det_input_widget_dist[key]
+            det_input_widget = det_input_widget_dict[key]
             det_input_widget.delete(1.0, END)
             det_input_widget.insert(END, ssr[key])
     # clear det_input_widgets when no item in lst_lb left
     elif lst_lb.size() == 0:
         for (name, key) in LAB_NAME_KEY:
-            det_input_widget_dist[key].delete(1.0, END)
+            det_input_widget_dict[key].delete(1.0, END)
