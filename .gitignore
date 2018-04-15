@@ -3,3 +3,6 @@ ssr-manager.iml
 test
 将删除 .idea/
 将删除 ssr-manager.iml
+__pycache__
+test.py
+logs
