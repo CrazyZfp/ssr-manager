@@ -39,7 +39,7 @@ def update_ssr(index):
     ssr = ssr_config[KEY_SSR_LIST][index]
     for (name, key) in LAB_NAME_KEY:
         text_widget = det_input_widget_dict[key]
-        ssr[key] = text_widget.get("1.0", END).strip()
+        ssr[key] = text_widget.get().strip()
     init_panel_data()
     update_config(ssr_config)
 
@@ -120,10 +120,28 @@ def render_det_data():
         ssr_selected_index = item_selected_list[0]
         ssr = ssr_config[KEY_SSR_LIST][ssr_selected_index]
         for (name, key) in LAB_NAME_KEY:
-            det_input_widget = det_input_widget_dict[key]
-            det_input_widget.delete(1.0, END)
-            det_input_widget.insert(END, ssr[key])
+            if not render_data_if_combobox(key, ssr[key]):
+                det_input_widget = det_input_widget_dict[key]
+                det_input_widget.delete(0, END)
+                det_input_widget.insert(END, ssr[key])
     # clear det_input_widgets when no item in lst_lb left
     elif lst_lb.size() == 0:
         for (name, key) in LAB_NAME_KEY:
-            det_input_widget_dict[key].delete(1.0, END)
+            if not render_data_if_combobox(key, ""):
+                det_input_widget_dict[key].delete(0, END)
+
+
+def render_data_if_combobox(key, value):
+    try:
+        if key == "obfs":
+            idx = OBFS_LST.index(value)
+        elif key == "method":
+            idx = METHOD_LST.index(value)
+        elif key == "protocol":
+            idx = PROTOCOL_LST.index(value)
+        else:
+            return False
+    except ValueError:
+        idx = 0
+    det_input_widget_dict[key].current(idx)
+    return True
