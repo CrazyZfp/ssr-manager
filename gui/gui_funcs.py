@@ -13,6 +13,8 @@ logger = getLogger("gui_funcs")
 
 ssr_selected_index = -1
 
+p = None
+
 
 def init_panel_data():
     if KEY_SSR_LIST in ssr_config:

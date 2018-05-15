@@ -3,7 +3,7 @@ SSR-MANAGER
 
 ssr的简易图形client,需要搭配[ShadowsocksR](https://github.com/shadowsocksr-backup/shadowsocksr)食用
 
-GUI由Tkinter构建，需要python3环境
+GUI由Tkinter构建，需要python3环境(推荐python 3.5 及以上版本)
 
 
 #### Usage

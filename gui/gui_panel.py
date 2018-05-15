@@ -84,7 +84,7 @@ class App:
         # TODO 详情界面，框元素重写
         for index, (lab_name, input_key) in enumerate(LAB_NAME_KEY):
             lb = Label(det_frm, det_label_cnf, text=lab_name)
-            if input_key == "server_port" or input_key == "local_port":
+            if input_key == "port" or input_key == "local_port":
                 # 关于validatecommand设置，可参考http://infohost.nmt.edu/tcc/help/pubs/tkinter/web/entry-validation.html
                 tx = Entry(det_frm, det_text_cnf, validate="key", validatecommand=(is_int_valid_cmd, "%P"))
             elif input_key == "obfs":
@@ -133,7 +133,7 @@ class App:
     #     srv_tx.grid(column=1, row=1)
     #
     #     sip_lb = Label(dfw, det_label_cnf, text="*远程端口")
-    #     sip_tx = Entry(dfw, det_text_cnf, textvariable=gtv.server_port_var)
+    #     sip_tx = Entry(dfw, det_text_cnf, textvariable=gtv.port_var)
     #     sip_lb.grid(column=0, row=2)
     #     sip_tx.grid(column=1, row=2)
     #

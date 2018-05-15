@@ -11,7 +11,7 @@ DEFAULT = "default"
 DEFAULT_SSR = {
     "ssr_name": "default",
     "server": "192.168.1.1",
-    "server_port": 0,
+    "port": 0,
     "local": "127.0.0.1",
     "local_port": 8080,
     "password": "password",
@@ -23,7 +23,7 @@ DEFAULT_SSR = {
 }
 
 # pairs of Lable widget text with Text widget key in det_frm
-LAB_NAME_KEY = [("代理名称", "ssr_name"), ("*远程IP", "server"), ("*远程端口", "server_port"),
+LAB_NAME_KEY = [("代理名称", "ssr_name"), ("*远程IP", "server"), ("*远程端口", "port"),
                 ("本地IP", "local"), ("本地端口", "local_port"), ("*连接密码", "password"),
                 ("*混淆方式", "obfs"), ("混淆参数", "obfs_param"), ("*加密方法", "method"),
                 ("*协议", "protocol"), ("协议参数", "protocol_param")]

@@ -3,14 +3,14 @@
         {
             "local": "127.0.0.1",
             "local_port": "8080",
-            "method": "none",
-            "obfs": "plain",
+            "method": "rc4-md5-6",
+            "obfs": "tls_simple",
             "obfs_param": "",
             "password": "password",
-            "protocol": "origin",
+            "protocol": "auth_aes128_sha1",
             "protocol_param": "",
             "server": "192.168.1.1",
-            "server_port": "0",
+            "port": "0",
             "ssr_name": "default"
         }
     ],

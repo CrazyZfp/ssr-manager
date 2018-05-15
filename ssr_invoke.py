@@ -2,7 +2,7 @@ from subprocess import check_output
 import sys
 
 LONG_SHORT_OPTS_MAP = {
-    "server_port": "-p",
+    "port": "-p",
     "password": "-k",
     "local_port": "-l",
     "server:": "-s",
