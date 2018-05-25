@@ -6,3 +6,4 @@ test
 **/__pycache__
 test.py
 logs
+*.png
