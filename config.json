@@ -4,13 +4,26 @@
             "local": "127.0.0.1",
             "local_port": "8080",
             "method": "rc4-md5-6",
-            "obfs": "tls_simple",
+            "obfs": "http_simple",
             "obfs_param": "",
             "password": "password",
+            "port": "0",
             "protocol": "auth_aes128_sha1",
             "protocol_param": "",
             "server": "192.168.1.1",
-            "port": "0",
+            "ssr_name": "default"
+        },
+        {
+            "local": "127.0.0.1",
+            "local_port": 8080,
+            "method": "none",
+            "obfs": "plain",
+            "obfs_param": "",
+            "password": "password",
+            "port": 0,
+            "protocol": "origin",
+            "protocol_param": "",
+            "server": "192.168.1.1",
             "ssr_name": "default"
         }
     ],
