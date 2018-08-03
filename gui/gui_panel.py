@@ -119,11 +119,12 @@ class App:
 
     def menu_init(self):
         """菜单栏 初始化"""
+        from gui.gui_funcs import encode_ssr_to_qr
         menu_bar = Menu(self.window)
 
         file_menu = Menu(menu_bar, tearoff=0)
         file_menu.add_command(label="二维码导入")
-        file_menu.add_command(label="二维码导出")
+        file_menu.add_command(label="二维码导出",command=encode_ssr_to_qr)
         menu_bar.add_cascade(label="文件", menu=file_menu)
 
         config_menu = Menu(menu_bar, tearoff=0)

@@ -27,7 +27,7 @@ def encode_qr(ssr):
     qr.add_data(ssr_url)
     qr.make(fit=True)
     img = qr.make_image()
-    # img.show()
+    img.show()
 
 
-decode_qr("tt.png")
+# decode_qr("tt.png")

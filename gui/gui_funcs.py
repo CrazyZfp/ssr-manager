@@ -9,6 +9,7 @@ from config_operator import update_config, ssr_path_verify
 from log.logger import getLogger
 from ssr_invoke import link_ssr
 from ssr_url_util import encode_ssr
+from qr_util import encode_qr
 
 logger = getLogger("gui_funcs")
 
@@ -127,13 +128,23 @@ def del_btn_click_handler(_):
             # else:
             #     add_btn_click_handler(_)
 
+def encode_ssr_to_qr():
+    print("lalalal")
+    global ssr_selected_index
+    ssr = ssr_config[KEY_SSR_LIST][ssr_selected_index]
+    encode_qr(ssr)
+
 
 def lst_item_selected_handler(e):
     # e.x_root == e.y_root == -1 表示list中有item被点击(foucs)
     # e.x_root == e.y_root == 0 表示list中item焦点丢失(loose foucs)
     # loose foucs 的事件不需要重新渲染
     if e.x_root == -1:
-        render_det_data()
+        global ssr_selected_index
+        lst_lb = det_input_widget_dict["lst_lb"]
+        # 当前选择的item与上一次选择的item是同一个item时,不进行渲染
+        if ssr_selected_index != lst_lb.curselection()[0]:
+            render_det_data()
 
 
 def render_det_data():

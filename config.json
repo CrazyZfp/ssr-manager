@@ -2,31 +2,31 @@
     "ssr_list": [
         {
             "local": "127.0.0.1",
-            "local_port": "8887",
-            "method": "aes-128-ctr",
-            "obfs": "tls_simple",
-            "obfsparam": "",
-            "password": "pa",
-            "port": "9999",
-            "protocol": "auth_chain_d",
-            "protoparam": "",
-            "remarks": "9777",
-            "server": "192.168.1.9",
-            "ssr_url": "ssr://MTkyLjE2OC4xLjk6OTk5OTphdXRoX2NoYWluX2Q6YWVzLTEyOC1jdHI6dGxzX3NpbXBsZTpjR0U9Lz9vYmZzcGFyYW09JnByb3RvcGFyYW09JnNzcm5hbWU9T1RjM053PT0="
-        },
-        {
-            "local": "127.0.0.1",
             "local_port": "8080",
             "method": "none",
-            "obfs": "plain",
+            "obfs": "tls_simple",
             "obfsparam": "",
             "password": "password",
             "port": "0",
             "protocol": "origin",
             "protoparam": "",
-            "remarks": "default99",
+            "remarks": "default",
             "server": "192.168.1.1",
-            "ssr_url": "ssr://MTkyLjE2OC4xLjE6MDpvcmlnaW46bm9uZTpwbGFpbjpjR0Z6YzNkdmNtUT0vP29iZnNwYXJhbT0mcHJvdG9wYXJhbT0mc3NybmFtZT1aR1ZtWVhWc2REazU="
+            "ssr_url": "ssr://MTkyLjE2OC4xLjE6MDpvcmlnaW46bm9uZTp0bHNfc2ltcGxlOmNHRnpjM2R2Y21RPS8_b2Jmc3BhcmFtPSZwcm90b3BhcmFtPSZzc3JuYW1lPVpHVm1ZWFZzZEE9PQ=="
+        },
+        {
+            "local": "127.0.0.1",
+            "local_port": 8080,
+            "method": "none",
+            "obfs": "plain",
+            "obfsparam": "",
+            "password": "password",
+            "port": 0,
+            "protocol": "origin",
+            "protoparam": "",
+            "remarks": "default",
+            "server": "192.168.1.1",
+            "ssr_url": "ssr://MTkyLjE2OC4xLjE6MDpvcmlnaW46bm9uZTpwbGFpbjpjR0Z6YzNkdmNtUT0vP29iZnNwYXJhbT0mcHJvdG9wYXJhbT0mc3NybmFtZT1aR1ZtWVhWc2RBPT0="
         }
     ],
     "ssr_path": "/home/zfp/Coding/Sources/shadowsocksr/shadowsocks/local.py"
