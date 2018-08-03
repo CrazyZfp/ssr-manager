@@ -9,8 +9,8 @@ LONG_SHORT_OPTS_MAP = {
     "method": "-m",
     "protocol": "-O",
     "obfs": "-o",
-    "protocol_param": "-G",
-    "obfs_param": "-g",
+    "protoparam": "-G",
+    "obfsparam": "-g",
     "local_address": "-b"
 }
 

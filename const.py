@@ -9,24 +9,25 @@ KEY_SSR_LIST = "ssr_list"  # key to the list of ssr settings
 DEFAULT = "default"
 # default ssr modle
 DEFAULT_SSR = {
-    "ssr_name": "default",
+    "remarks": "default",
     "server": "192.168.1.1",
     "port": 0,
     "local": "127.0.0.1",
     "local_port": 8080,
     "password": "password",
     "obfs": "plain",
-    "obfs_param": "",
+    "obfsparam": "",
     "method": "none",
     "protocol": "origin",
-    "protocol_param": ""
+    "protoparam": "",
+    "ssr_url": "ssr://MTkyLjE2OC4xLjE6MDpvcmlnaW46bm9uZTpwbGFpbjpjR0Z6YzNkdmNtUT0vP29iZnNwYXJhbT0mcHJvdG9wYXJhbT0mc3NybmFtZT1aR1ZtWVhWc2RBPT0="
 }
 
 # pairs of Lable widget text with Text widget key in det_frm
-LAB_NAME_KEY = [("代理名称", "ssr_name"), ("*远程IP", "server"), ("*远程端口", "port"),
+LAB_NAME_KEY = [("代理名称", "remarks"), ("*远程IP", "server"), ("*远程端口", "port"),
                 ("本地IP", "local"), ("本地端口", "local_port"), ("*连接密码", "password"),
-                ("*混淆方式", "obfs"), ("混淆参数", "obfs_param"), ("*加密方法", "method"),
-                ("*协议", "protocol"), ("协议参数", "protocol_param")]
+                ("*混淆方式", "obfs"), ("混淆参数", "obfsparam"), ("*加密方法", "method"),
+                ("*协议", "protocol"), ("协议参数", "protoparam"), ("URL", "ssr_url")]
 
 # ssr_path_verify RETURN VALUE
 NO_CONFIG = 0  # no config.json

@@ -38,6 +38,7 @@ def encode_ssr(ssr):
 def decode_ssr(ssr_url_b64):
     ssr = {}
 
+    print("decode_ssr: {}".format(ssr_url_b64))
     ssr_url = b64_decode(ssr_url_b64.lstrip("ssr://").replace("_", "/").replace("-", "+"))
     ssr_arr = ssr_url.split(":")
 
@@ -47,32 +48,31 @@ def decode_ssr(ssr_url_b64):
     ssr['method'] = ssr_arr[3]
     ssr['obfs'] = ssr_arr[4]
 
-    pwd_b64, param_b64_str = ssr_arr[5].split("/?")
-    ssr["password"] = b64_decode(pwd_b64)
+    pwd_param_b64 = ssr_arr[5].split("/?")
 
-    param_map_b64 = uri_to_map(param_b64_str)
-    for k, v in param_map_b64.items():
-        ssr[k] = b64_decode(v)
+    ssr["password"] = b64_decode(pwd_param_b64[0])
+
+    # 参数非空的情况,依次解码参数
+    if len(pwd_param_b64) > 1:
+        param_map_b64 = uri_to_map(pwd_param_b64[1])
+        for k, v in param_map_b64.items():
+            ssr[k] = b64_decode(v)
 
     return ssr
 
-    #
-
-
-re = encode_ssr({
-    "method": "rc4-md5-6",
-    "obfs": "http_simple",
-    "obfsparam": "sdf",
-    "password": "password",
-    "port": "1253",
-    "protocol": "auth_aes128_sha1",
-    "protoparam": "",
-    "server": "192.168.1.1",
-    "remarks": "default"
-})
-print(re)
-# re_ssr = decode_ssr(
-#     "ssr://MzEuanAuaGRzb2Nrcy5jbjozMDYwNzphdXRoX2NoYWluX2E6bm9uZTp0bHMxLjJfdGlja2V0X2F1dGg6T0V4cU9YRmlPSGRETVEvP29iZnNwYXJhbT0mcHJvdG9wYXJhbT0mcmVtYXJrcz1NekV1YW5BdWFHUnpiMk5yY3k1amJnJmdyb3VwPQ")
-# print(re_ssr)
-
-print(decode_ssr(re))
+# re = encode_ssr({
+#     "remarks": "default",
+#     "server": "192.168.1.1",
+#     "port": 0,
+#     "local": "127.0.0.1",
+#     "local_port": 8080,
+#     "password": "password",
+#     "obfs": "plain",
+#     "obfsparam": "",
+#     "method": "none",
+#     "protocol": "origin",
+#     "protoparam": ""
+# })
+# print(re)
+#
+# print(decode_ssr(re))

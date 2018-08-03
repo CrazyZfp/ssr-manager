@@ -2,29 +2,31 @@
     "ssr_list": [
         {
             "local": "127.0.0.1",
-            "local_port": "8080",
-            "method": "rc4-md5-6",
-            "obfs": "http_simple",
-            "obfs_param": "",
-            "password": "password",
-            "port": "0",
-            "protocol": "auth_aes128_sha1",
-            "protocol_param": "",
-            "server": "192.168.1.1",
-            "ssr_name": "default"
+            "local_port": "8887",
+            "method": "aes-128-ctr",
+            "obfs": "tls_simple",
+            "obfsparam": "",
+            "password": "pa",
+            "port": "9999",
+            "protocol": "auth_chain_d",
+            "protoparam": "",
+            "remarks": "9777",
+            "server": "192.168.1.9",
+            "ssr_url": "ssr://MTkyLjE2OC4xLjk6OTk5OTphdXRoX2NoYWluX2Q6YWVzLTEyOC1jdHI6dGxzX3NpbXBsZTpjR0U9Lz9vYmZzcGFyYW09JnByb3RvcGFyYW09JnNzcm5hbWU9T1RjM053PT0="
         },
         {
             "local": "127.0.0.1",
-            "local_port": 8080,
+            "local_port": "8080",
             "method": "none",
             "obfs": "plain",
-            "obfs_param": "",
+            "obfsparam": "",
             "password": "password",
-            "port": 0,
+            "port": "0",
             "protocol": "origin",
-            "protocol_param": "",
+            "protoparam": "",
+            "remarks": "default99",
             "server": "192.168.1.1",
-            "ssr_name": "default"
+            "ssr_url": "ssr://MTkyLjE2OC4xLjE6MDpvcmlnaW46bm9uZTpwbGFpbjpjR0Z6YzNkdmNtUT0vP29iZnNwYXJhbT0mcHJvdG9wYXJhbT0mc3NybmFtZT1aR1ZtWVhWc2REazU="
         }
     ],
     "ssr_path": "/home/zfp/Coding/Sources/shadowsocksr/shadowsocks/local.py"

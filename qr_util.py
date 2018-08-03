@@ -5,12 +5,14 @@ from ssr_url_util import decode_ssr, encode_ssr
 
 
 def decode_qr(img_path):
-    ssr_url_bytes_lst = decode(Image.open('tt.png'))
+    qr_decode_obj_list = decode(Image.open(img_path))
     ssr_lst = []
-    for ssr_url_bytes in ssr_url_bytes_lst:
-        ssr = decode_ssr(ssr_url_bytes.decode("utf-8"))
-        ssr["ssr_url"] = ssr_url_bytes
+    for qr_decode_obj in qr_decode_obj_list:
+        ssr_url = qr_decode_obj.data.decode()
+        ssr = decode_ssr(ssr_url)
+        ssr["ssr_url"] = ssr_url
         ssr_lst.append(ssr)
+    print(ssr_lst)
     return ssr_lst
 
 
@@ -25,21 +27,7 @@ def encode_qr(ssr):
     qr.add_data(ssr_url)
     qr.make(fit=True)
     img = qr.make_image()
-    img.show()
+    # img.show()
 
 
-encode_qr({
-    "local": "127.0.0.1",
-    "local_port": "8080",
-    "method": "rc4-md5-6",
-    "obfs": "http_simple",
-    "obfsparam": "",
-    "password": "password",
-    "port": "0",
-    "protocol": "auth_aes128_sha1",
-    "protoparam": "",
-    "server": "192.168.1.1",
-    "remarks": "default"
-})
-
-decode_qr("test.png")
+decode_qr("tt.png")

@@ -8,10 +8,11 @@ from const import *
 from config_operator import update_config, ssr_path_verify
 from log.logger import getLogger
 from ssr_invoke import link_ssr
+from ssr_url_util import encode_ssr
 
 logger = getLogger("gui_funcs")
 
-ssr_selected_index = -1
+ssr_selected_index = 0
 
 p = None
 
@@ -20,9 +21,9 @@ def init_panel_data():
     if KEY_SSR_LIST in ssr_config:
         ssr_list = ssr_config[KEY_SSR_LIST]
         if len(ssr_list) > 0:
-            ssr_name_list = [ssr["ssr_name"] for ssr in ssr_list]
-            lst_listvar.set(ssr_name_list)
-            det_input_widget_dict["lst_lb"].selection_set(0)
+            remarks_list = [ssr["remarks"] for ssr in ssr_list]
+            lst_listvar.set(remarks_list)
+            # det_input_widget_dict["lst_lb"].selection_set(0)
             render_det_data()
             return
 
@@ -42,6 +43,12 @@ def update_ssr(index):
     for (name, key) in LAB_NAME_KEY:
         text_widget = det_input_widget_dict[key]
         ssr[key] = text_widget.get().strip()
+
+    del ssr["ssr_url"]
+    ssr_url = encode_ssr(ssr)
+    print("update_ssr - ssr_url: {}".format(ssr_url))
+    ssr["ssr_url"] = ssr_url
+
     init_panel_data()
     update_config(ssr_config)
 
@@ -52,6 +59,9 @@ def del_ssr(index):
 
 
 def link_btn_click_handler(event):
+    """
+    "连接/断开"按钮 点击事件
+    """
     link_btn = event.widget
     btn_txt = link_btn["text"]
     global p
@@ -75,6 +85,9 @@ def link_btn_click_handler(event):
 
 
 def add_btn_click_handler(_):
+    """
+    "新增"按钮 点击事件
+    """
     lst_lb = det_input_widget_dict["lst_lb"]
     lst_lb.insert(END, DEFAULT)
     add_default_ssr()
@@ -84,6 +97,9 @@ def add_btn_click_handler(_):
 
 
 def save_btn_click_handler(_):
+    """
+    "保存"按钮 点击事件
+    """
     lst_lb = det_input_widget_dict["lst_lb"]
     if lst_lb.size() == 0:
         add_default_ssr()
@@ -91,6 +107,9 @@ def save_btn_click_handler(_):
 
 
 def del_btn_click_handler(_):
+    """
+    "删除"按钮 点击事件
+    """
     lst_lb = det_input_widget_dict["lst_lb"]
     index_selected_tuple = lst_lb.curselection()
     if len(index_selected_tuple) > 0:
@@ -109,20 +128,31 @@ def del_btn_click_handler(_):
             #     add_btn_click_handler(_)
 
 
-def lst_item_selected_handler(_):
-    render_det_data()
+def lst_item_selected_handler(e):
+    # e.x_root == e.y_root == -1 表示list中有item被点击(foucs)
+    # e.x_root == e.y_root == 0 表示list中item焦点丢失(loose foucs)
+    # loose foucs 的事件不需要重新渲染
+    if e.x_root == -1:
+        render_det_data()
 
 
 def render_det_data():
+    global ssr_selected_index
+
     lst_lb = det_input_widget_dict["lst_lb"]
-    item_selected_list = lst_lb.curselection()
+    if lst_lb.curselection():
+        ssr_selected_index = lst_lb.curselection()[0]
+
     # prevent exception when lst_lb lose focus
-    if len(item_selected_list) == 1:
-        global ssr_selected_index
-        ssr_selected_index = item_selected_list[0]
+    if lst_lb.size() != 0:
         ssr = ssr_config[KEY_SSR_LIST][ssr_selected_index]
+        print("render_det_data - ssr_url: {}".format(ssr['ssr_url']))
         for (name, key) in LAB_NAME_KEY:
-            if not render_data_if_combobox(key, ssr[key]):
+            if key == "ssr_url":
+                url_var.set(ssr[key])
+            elif key in ["obfs", "method", "protocol"]:
+                render_data_if_combobox(key, ssr[key])
+            else:
                 det_input_widget = det_input_widget_dict[key]
                 det_input_widget.delete(0, END)
                 det_input_widget.insert(END, ssr[key])
