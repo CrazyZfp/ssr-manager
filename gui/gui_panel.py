@@ -23,6 +23,8 @@ class App:
     def __init__(self):
         self.window = Tk()
 
+        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         self.window.title("ssr-manager")
         self.window.geometry("550x380")
         self.window.resizable(width=False, height=False)
@@ -36,6 +38,13 @@ class App:
 
         from gui.gui_funcs import init_panel_data
         init_panel_data()
+
+    def on_closing(self):
+        from tkinter import messagebox
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            from ssr_invoke import terminate_process
+            terminate_process()
+            self.window.destroy()
 
     def lst_init(self):
         """列表部分 初始化"""
@@ -124,7 +133,7 @@ class App:
 
         file_menu = Menu(menu_bar, tearoff=0)
         file_menu.add_command(label="二维码导入")
-        file_menu.add_command(label="二维码导出",command=encode_ssr_to_qr)
+        file_menu.add_command(label="二维码导出", command=encode_ssr_to_qr)
         menu_bar.add_cascade(label="文件", menu=file_menu)
 
         config_menu = Menu(menu_bar, tearoff=0)

@@ -1,17 +1,16 @@
 from gui.global_vars import ssr_config, det_input_widget_dict
 from gui.tk_vars import *
 from tkinter.constants import *
-from multiprocessing import Process
 import copy
 
 from const import *
 from config_operator import update_config, ssr_path_verify
-from log.logger import getLogger
-from ssr_invoke import link_ssr
+from log.logger import get_logger
+from ssr_invoke import link_ssr,terminate_process
 from ssr_url_util import encode_ssr
 from qr_util import encode_qr
 
-logger = getLogger("gui_funcs")
+logger = get_logger("gui_funcs")
 
 ssr_selected_index = 0
 
@@ -74,12 +73,9 @@ def link_btn_click_handler(event):
         link_btn_var.set(SHUTDOWN)
         link_btn["bg"] = SHUTDOWN_COLOR
         link_btn["activebackground"] = SHUTDOWN_COLOR
-        p = Process(target=link_ssr,
-                    args=(ssr_config[KEY_SSR_PATH], ssr_config[KEY_SSR_LIST][ssr_selected_index]))
-        p.start()
+        link_ssr(ssr_config[KEY_SSR_PATH], ssr_config[KEY_SSR_LIST][ssr_selected_index])
     else:
-        if p is not None:
-            p.terminate()
+        terminate_process()
         link_btn_var.set(CONNECT)
         link_btn["bg"] = CONNECT_COLOR
         link_btn["activebackground"] = CONNECT_COLOR
@@ -128,8 +124,8 @@ def del_btn_click_handler(_):
             # else:
             #     add_btn_click_handler(_)
 
+
 def encode_ssr_to_qr():
-    print("lalalal")
     global ssr_selected_index
     ssr = ssr_config[KEY_SSR_LIST][ssr_selected_index]
     encode_qr(ssr)

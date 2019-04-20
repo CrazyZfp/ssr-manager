@@ -2,7 +2,7 @@ import base64
 
 
 def b64_encode(content_str, altchars=b'-_'):
-    return bytes.decode(base64.b64encode(str(content_str).encode('latin-1'), altchars))
+    return bytes.decode(base64.b64encode(str(content_str).encode('UTF-8'), altchars))
 
 
 def b64_decode(content_b64):
